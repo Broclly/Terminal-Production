@@ -2,9 +2,11 @@
 
 import math, time, os
 
+from assets import actions
+
 def shop_menu(data):
     while True:
-        os.system(('clear'))
+        actions.clear_screen()
         print("Welcome to the Bitsclusives!")
         print("Bits: " + str(math.floor(data.bits)))
         print("")

@@ -73,3 +73,10 @@ def save_shop(user_data):
     file.write(json.dumps(template))
 
     file.close()
+
+def clear_screen():
+    temp = os.name
+    if temp == "nt":
+        os.system('cls')
+    else:
+        os.system('clear')
