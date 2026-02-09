@@ -3,9 +3,12 @@
 import os, json
 
 def directory_snap(file_name : str):
-    saves_dir = os.path.join(os.path.dirname(__file__), "saves")
-    file_path = os.path.join(saves_dir, file_name)
-    return file_path
+    try:
+        saves_dir = os.path.join(os.path.dirname(__file__), "saves")
+        file_path = os.path.join(saves_dir, file_name)
+        return file_path
+    except:
+        print("Invalid input.")
 
 def load_game(player_name,user_data):
     try:
@@ -16,12 +19,17 @@ def load_game(player_name,user_data):
     for x in file:
         info_dict = json.loads(x)
     
-    user_data.name = info_dict["name"]
-    user_data.heat_rate = info_dict["heat_rate"]
-    user_data.heat_max = info_dict["heat_max"]
-    user_data.bits = info_dict["bits"]
-    user_data.bits_multi = info_dict["bit_multi"]
-    user_data.bit_cooldown = info_dict["bit_cooldown"]
+    try:
+        user_data.name = info_dict["name"]
+        user_data.heat_rate = info_dict["heat_rate"]
+        user_data.heat_max = info_dict["heat_max"]
+        user_data.bits = info_dict["bits"]
+        user_data.bits_multi = info_dict["bit_multi"]
+        user_data.bit_cooldown = info_dict["bit_cooldown"]
+        user_data.super_bits = info_dict["super_bits"]
+        user_data.super_bit_chnce = info_dict["super_bits_chance"]
+    except:
+        pass
 
     file.close()
 
@@ -34,8 +42,12 @@ def load_shop(player_name,user_data):
     for x in file:
         info_dict = json.loads(x)
 
-    user_data.shop_items[0] = info_dict["upgrade1"]
-    user_data.shop_items[1] = info_dict["upgrade2"]
+    try:
+        user_data.shop_items[0] = info_dict["upgrade1"]
+        user_data.shop_items[1] = info_dict["upgrade2"]
+        user_data.shop_items[2] = info_dict["upgrade3"]
+    except:
+        pass
 
     file.close()
     
@@ -53,7 +65,9 @@ def save_game(user_data):
         "heat_max" : user_data.heat_max,
         "bits" : user_data.bits,
         "bit_multi" : user_data.bit_multi,
-        "bit_cooldown" : 0.1 * user_data.heat_rate
+        "bit_cooldown" : 0.1 * user_data.heat_rate,
+        "super_bits" : user_data.super_bits,
+        "super_bits_chance" : user_data.super_bit_chnce
          }
     file.write(json.dumps(template))
 
@@ -69,6 +83,7 @@ def save_shop(user_data):
     template = {
         "upgrade1" : user_data.shop_items[0],
         "upgrade2" : user_data.shop_items[1],
+        "upgrade3" : user_data.shop_items[2],
          }
     file.write(json.dumps(template))
 
