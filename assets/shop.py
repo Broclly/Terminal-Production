@@ -20,7 +20,8 @@ def shop_menu(data):
             if action == 1:
                 try: 
                     action = int(input("Select which item would you like to buy: "))
-                    shop_purchase(action, data)
+                    amnt = int(input("Select how many you would like to buy: "))
+                    shop_purchase(action, data, amnt)
                 except ValueError:
                     print("Invalid input.")
                     time.sleep(1)
@@ -32,11 +33,17 @@ def shop_menu(data):
             print("Invalid input.")
             time.sleep(1)
 
-def shop_purchase(buy_item, data):
-    try: 
+def shop_purchase(buy_item, data, buy_amnt):
+    try:
+        final_cost = 0
         base_cost = data.shop_items[(buy_item - 1)]["cost"]
         tier = data.shop_items[(buy_item - 1)]["tier"]
-        final_cost = math.floor(base_cost + (5 ** (0.25 * tier)))
+        for x in range(buy_amnt):
+            cost = math.floor(base_cost + (5 ** (0.25 * (tier + x))))
+            print(cost)
+            final_cost += cost
+            print(final_cost)
+        input("")
 
     except IndexError:
         print("This item doesn't exist! Check the shop to make sure it exists.")
@@ -44,15 +51,15 @@ def shop_purchase(buy_item, data):
         return
 
     if data.bits >= final_cost and (buy_item - 1) < len(data.shop_items):
-        data.shop_items[(buy_item - 1)]["tier"] += 1
+        data.shop_items[(buy_item - 1)]["tier"] += 1 * buy_amnt
         data.bits -= final_cost
         if buy_item == 1:
-            data.heat_rate /= 1.75
+            data.heat_rate /= (1.75 * buy_amnt)
         elif buy_item == 2:
-            data.bit_multi += 1
+            data.bit_multi += (1 * buy_amnt)
     elif (buy_item - 1) >= len(data.shop_items):
         print("This item doesn't exist! Check the shop to make sure it exists.")
         time.sleep(1)
     else: 
-        print("You don't have enough bits!")
+        print(f"You don't have enough bits! You need {final_cost - data.bits} more!")
         time.sleep(1)
