@@ -4,7 +4,7 @@ import time, random, os, math
 import assets.player as player, assets.actions as actions, assets.shop as shop
 
 user = player.Player()
-build_ver = 0.1
+build_ver = 0.2
 
 
 def welcome():
