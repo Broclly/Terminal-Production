@@ -14,7 +14,7 @@ def welcome():
     
 
 def main_menu():
-    os.system('clear')
+    actions.clear_screen()
     user.screen = "actions1"
     while True:
         print("1. New")
@@ -35,12 +35,13 @@ def main_menu():
                 print("Do not include the .json file extension")
                 print("Do not try to load the -shop.json file")
                 time.sleep(3)
+                actions.clear_screen()
         elif temp == 3:
             quit()
 
 def game_play():
     while True: 
-        os.system('clear')
+        actions.clear_screen()
         print("Username: " + user.name)
         print("Bits: " + str(math.floor(user.bits)))
         print("========")
@@ -50,7 +51,7 @@ def game_play():
         print("4. Back to menu")
         temp = int(input("Select the number on which task you selected: "))
         if temp == 1:
-            os.system('clear')
+            actions.clear_screen()
             user.bit_production()
         elif temp == 2:
             actions.load_shop(user.name,user)
@@ -58,12 +59,12 @@ def game_play():
             actions.save_shop(user)
             actions.save_game(user)
             actions.load_game(user.name,user)
-            os.system('clear')
+            actions.clear_screen()
         elif temp == 3:
             actions.save_game(user)
             actions.save_shop(user)
             actions.load_game(user.name,user) # refreshes data
-            os.system('clear')
+            actions.clear_screen()
         elif temp == 4:
             return
         else:

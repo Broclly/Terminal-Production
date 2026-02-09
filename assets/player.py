@@ -37,7 +37,7 @@ class Player():
                 self.production_HUD()
                 time.sleep(3)
                 self.screen == "actions2"
-                os.system('clear')
+                actions.clear_screen()
                 actions.save_game(self)
                 return
             if self.status != "Nominal":
@@ -59,17 +59,13 @@ class Player():
             "====="
         ]
 
-        # Dynamically calculate the number of lines to clear
         total_lines = 0
-        terminal_width = os.get_terminal_size().columns  # Get the terminal width dynamically
+        terminal_width = os.get_terminal_size().columns 
 
         for line in content_lines:
-            # Calculate how many terminal lines the content of this line takes
             total_lines += math.ceil(len(line) / terminal_width)
 
-        # Print the content
         for line in content_lines:
-            print(f"\033[2K{line}", flush=True)  # Clear the line and print the new content
-        
-                # Move the cursor up by the total number of lines
-        print(f"\033[{total_lines}A", end='')  # Move cursor up without clearing
+            print(f"\033[2K{line}", flush=True)
+    
+        print(f"\033[{total_lines}A", end='') 
