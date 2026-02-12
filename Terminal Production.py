@@ -24,10 +24,10 @@ def main_menu():
         try: 
             temp = int(input("Select the number on which task you selected: "))
             if temp == 1:
-                user.name = input("Enter your username: ")
+                user.name = input("Welcome! Enter your username: ")
                 game_play()
             elif temp == 2:
-                file_to_load = input("Enter your username: ")
+                file_to_load = input("Welcome back! Enter your username: ")
                 load_check = actions.load_game(file_to_load, user)
                 if load_check != 0:
                     actions.load_shop(file_to_load, user)
@@ -49,7 +49,8 @@ def game_play():
         actions.clear_screen()
         print("Username: " + user.name)
         print("Bits: " + str(math.floor(user.bits)))
-        print("Super Bits: " +str(math.floor(user.super_bits)))
+        if user.super_bits > 0:
+            print("Super Bits: " +str(math.floor(user.super_bits)))
         print("========")
         print("1. Produce Bits")
         print("2. Shop")
@@ -77,8 +78,9 @@ def game_play():
             else:
                 print("Invalid input")
                 time.sleep(3/2)
-        except ValueError:
+        except Exception as e:
             print("Invalid input.")
+            input(f"{e}")
             time.sleep(3/2)
 
 

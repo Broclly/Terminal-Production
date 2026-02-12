@@ -28,6 +28,7 @@ def load_game(player_name,user_data):
         user_data.bit_cooldown = info_dict["bit_cooldown"]
         user_data.super_bits = info_dict["super_bits"]
         user_data.super_bit_chnce = info_dict["super_bits_chance"]
+        user_data.fuse_cnt = info_dict["fuse_cnt"]
     except:
         pass
 
@@ -43,9 +44,9 @@ def load_shop(player_name,user_data):
         info_dict = json.loads(x)
 
     try:
-        user_data.shop_items[0] = info_dict["upgrade1"]
-        user_data.shop_items[1] = info_dict["upgrade2"]
-        user_data.shop_items[2] = info_dict["upgrade3"]
+        user_data.shop_items[0][0] = info_dict["bit_upgrade1"]
+        user_data.shop_items[0][1] = info_dict["bit_upgrade2"]
+        user_data.shop_items[0][2] = info_dict["bit_upgrade3"]
     except:
         pass
 
@@ -67,7 +68,8 @@ def save_game(user_data):
         "bit_multi" : user_data.bit_multi,
         "bit_cooldown" : 0.1 * user_data.heat_rate,
         "super_bits" : user_data.super_bits,
-        "super_bits_chance" : user_data.super_bit_chnce
+        "super_bits_chance" : user_data.super_bit_chnce,
+        "fuse_cnt" : user_data.fuse_cnt
          }
     file.write(json.dumps(template))
 
@@ -81,9 +83,10 @@ def save_shop(user_data):
         file = open(file_path + "-shop.json", "w")
     
     template = {
-        "upgrade1" : user_data.shop_items[0],
-        "upgrade2" : user_data.shop_items[1],
-        "upgrade3" : user_data.shop_items[2],
+        "bit_upgrade1" : user_data.shop_items[0][0],
+        "bit_upgrade2" : user_data.shop_items[0][1],
+        "bit_upgrade3" : user_data.shop_items[0][2],
+        "s_bit_upgrade1" : user_data.shop_items[1][0],
          }
     file.write(json.dumps(template))
 
