@@ -5,7 +5,7 @@ import assets.actions as actions
 
 class Player():
     def __init__(self, name="Player"):
-        self.shop_items = [{"tier" : 1, "cost" : 10, "id" : "Heat Rate"}, {"tier" : 1, "cost" : 25, "id" : "Bit Multi"}, {"tier" : 1, "cost" : 1000, "id" : "Super-Bit Chance"}]
+        self.shop_items = [[{"tier" : 1, "cost" : 10, "id" : "Heat Rate"}, {"tier" : 1, "cost" : 25, "id" : "Bit Multi"}, {"tier" : 1, "cost" : 1000, "id" : "Super-Bit Chance"}],[{"tier" : 1, "cost" : 1, "id" : "Xtra Fuse"}]]
         self.heat = 0
         self.heat_rate = 20 
         self.heat_max = 100
@@ -36,7 +36,10 @@ class Player():
                 heat_roll = 0
             else:
                 heat_roll = random.randint(0, (self.heat_max - int(self.heat)))
-                super_roll = random.randint(0, (100 - self.super_bit_chnce))
+                try:
+                    super_roll = random.randint(0, (100 - self.super_bit_chnce))
+                except:
+                    super_roll = random.randint(0, 50)
             if (heat_roll == 0):
                 self.status = "!! FUSE BLOWN !!"
                 self.production_HUD()
