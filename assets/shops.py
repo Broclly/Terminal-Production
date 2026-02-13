@@ -112,6 +112,8 @@ def imbumentalforge(data):
             action = int(input("Select the number on which task you selected: "))
             if action == 1:
                 if data.super_bits >= 10 and data.bits >= 100000000000:
+                    data.super_bits -= 10
+                    data.bits -= 100000000000 
                     actions.clear_screen()
                     forging(data)
                 else:
@@ -134,6 +136,8 @@ def imbumentalforge(data):
                     iterator += 1
             elif action == 3:
                 print("Ichor: Thank you for visiting, may luck grace your life.")
+                time.sleep(3/2)
+                return
         except:
             print("Invalid input.")
 
@@ -205,11 +209,12 @@ def forging(data):
         print("CRACK!")
         time.sleep(1)
         print("Your imbument stone cracked under the pressure! Unlucky...")
+        time.sleep(3/2)
         data.current_imbuement = "None"
         return
     time.sleep(1)
-    data.current_imbuement = imbument_list[rarity]["name"]
-    print(f"Your imbuement stone hexxed you with {imbument_list[rarity]["name"]}!")
-    print(f"Hex description: {imbument_list[rarity]["Desc"]}")
+    data.current_imbuement = imbument_list[(rarity - 1)]["name"]
+    print(f"Your imbuement stone hexxed you with {imbument_list[(rarity - 1)]["name"]}!")
+    print(f"Hex description: {imbument_list[(rarity - 1)]["Desc"]}")
     input("\nPress enter to return...")
     return

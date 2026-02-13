@@ -57,11 +57,11 @@ class Player():
                     fuse_cnt -= 1
             if self.status != "Nominal":
                 self.bits += 1 * ((self.bit_multi + self.temp_bonuses["bit_multi"]) * ((0.1 / self.bit_cooldown) / 2) )
-                self.heat += 0.1 / self.temp_bonuses["heat_divide"]
+                self.heat += 0.1 / 1 + self.temp_bonuses["heat_divide"]
                 time.sleep(0.1) 
             else: 
                 self.bits += 1 * (self.bit_multi + self.temp_bonuses["bit_multi"])
-                self.heat += self.heat_rate / self.temp_bonuses["heat_divide"]
+                self.heat += self.heat_rate / 1 + self.temp_bonuses["heat_divide"]
                 time.sleep(self.bit_cooldown)
             if super_roll == 0:
                 self.super_bits += 1 * (1 + (self.temp_bonuses["s_bit_multi"]))
@@ -95,7 +95,7 @@ class Player():
         print(f"Username: {self.name}")
         print(f"Bits: {self.bits}")
         print(f"Bit Cooldown: {self.bit_cooldown} seconds")
-        print(f"Heat Rate: {math.floor(self.heat_rate)}/cycle")
+        print(f"Heat Rate: {(self.heat_rate)}/cycle")
         print(f"Super-Bits: {self.super_bits}")
         print(f"Super-Bit Chance: {self.super_bit_chnce}%")
         print(f"Fuses: {(1 + self.bonus_fuses)}")

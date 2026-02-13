@@ -50,8 +50,8 @@ def load_shop(player_name,user_data):
         user_data.shop_items[0][1] = info_dict["bit_upgrade2"]
         user_data.shop_items[0][2] = info_dict["bit_upgrade3"]
         user_data.shop_items[1][0] = info_dict["s_bit_upgrade1"]
-        user_data.shop_items[1][0] = info_dict["s_bit_upgrade2"]
-        user_data.shop_items[1][0] = info_dict["s_bit_upgrade3"]
+        user_data.shop_items[1][1] = info_dict["s_bit_upgrade2"]
+        user_data.shop_items[1][2] = info_dict["s_bit_upgrade3"]
     except:
         pass
 
