@@ -1,7 +1,7 @@
 # Created on 2026-01-03
 
 import time, random, os, math
-import assets.player as player, assets.actions as actions, assets.shop as shop
+import assets.player as player, assets.actions as actions, assets.shops as shops
 
 user = player.Player()
 build_ver = 0.2
@@ -25,6 +25,8 @@ def main_menu():
             temp = int(input("Select the number on which task you selected: "))
             if temp == 1:
                 user.name = input("Welcome! Enter your username: ")
+                actions.new_game(user.name)
+                actions.load_game(user.name,user)
                 game_play()
             elif temp == 2:
                 file_to_load = input("Welcome back! Enter your username: ")
@@ -47,6 +49,7 @@ def main_menu():
 def game_play():
     while True: 
         actions.clear_screen()
+        user.temp_adders()
         print("Username: " + user.name)
         print("Bits: " + str(math.floor(user.bits)))
         if user.super_bits > 0:
@@ -55,7 +58,8 @@ def game_play():
         print("1. Produce Bits")
         print("2. Shop")
         print("3. Save")
-        print("4. Back to menu")
+        print("4. Display Stats")
+        print("5. Back to menu")
         try:
             temp = int(input("Select the number on which task you selected: "))
             if temp == 1:
@@ -63,7 +67,7 @@ def game_play():
                 user.bit_production()
             elif temp == 2:
                 actions.load_shop(user.name,user)
-                shop.shop_menu(user)
+                shops.shop_menu(user)
                 actions.save_shop(user)
                 actions.save_game(user)
                 actions.load_game(user.name,user)
@@ -74,6 +78,10 @@ def game_play():
                 actions.load_game(user.name,user) # refreshes data
                 actions.clear_screen()
             elif temp == 4:
+                actions.clear_screen()
+                actions.save_game(user)
+                user.display_stats()
+            elif temp == 5:
                 return
             else:
                 print("Invalid input")
