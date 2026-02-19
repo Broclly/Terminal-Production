@@ -23,8 +23,6 @@ class Player():
         self.status = "Nominal"
     
     def bit_production(self):
-        input((int(math.floor(self.super_bit_chnce / 10))))
-        input(self.fuse_durability)
         self.temp_adders()
         self.heat = 0
         fuse_cnt = 1 + self.bonus_fuses + self.temp_bonuses["xtra_fuses"]
@@ -105,7 +103,7 @@ class Player():
         print(f"Heat Rate: {(self.heat_rate)}/cycle")
         print(f"Super-Bits: {self.super_bits}")
         print(f"Super-Bit Chance: {(self.super_bit_chnce) / 10}%")
-        print(f"Fuses: {(1 + self.bonus_fuses)}")
+        print(f"Fuses: {(1 +  self.bonus_fuses)}")
         print(f"Fuse Durability: {(self.fuse_durability)}")
         print(f"Current Imbuement: {(self.current_imbuement)}")
         print("-------------")

@@ -88,7 +88,6 @@ def game_play():
                 time.sleep(3/2)
         except Exception as e:
             print("Invalid input.")
-            input(f"{e}")
             time.sleep(3/2)
 
 
