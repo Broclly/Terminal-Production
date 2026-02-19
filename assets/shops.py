@@ -117,9 +117,16 @@ def imbumentalforge(data):
                     actions.clear_screen()
                     forging(data)
                 else:
-                    print(f"Ichor: Sorry my friend. You lack the funds for my services, I'd need {10 - data.super_bits} more Super Bits, and {100000000000 - data.bits} more Bits.")
-                    print("Ichor: Maybe Brushia or Velcia can help?")
-                    time.sleep(2.5)
+                    if data.bits < 100000000000 and data.super_bits < 10:
+                        print(f"Ichor: Sorry my friend. You lack the funds for my services, I'd need {10 - data.super_bits} more Super Bits, and {100000000000 - data.bits} more Bits.")
+                        print("Ichor: Maybe Brushia or Velcia can help?")
+                    elif data.super_bits > 10:
+                        print(f"Ichor: Sorry my friend. You lack the funds for my services, I'd need {100000000000 - data.bits} more Bits.")
+                        print("Ichor: Work on that bit multi!")
+                    elif data.bits > 100000000000:
+                        print(f"Ichor: Sorry my friend. You lack the funds for my services, I'd need {10 - data.super_bits} more Super Bits.")
+                        print("Ichor: Perhaps some super bit chance upgrades are in order?")
+                    time.sleep(3.5)
             elif action == 2:
                 iterator = 1
                 actions.clear_screen()
@@ -142,11 +149,11 @@ def imbumentalforge(data):
             print("Invalid input.")
 
 def shop_purchase(buy_item, data, buy_amnt, shop):
-    if data.shop_items[0][2]["tier"] >= 50 and (buy_item) == 3 and shop == 1:
+    if data.shop_items[0][2]["tier"] >= 100 and (buy_item) == 3 and shop == 1:
         print("Brushia: Super-bit chance is already maxed!")
         time.sleep(3/2)
         return
-    elif data.shop_items[1][2]["tier"] >= 10 and (buy_item) == 2 and shop == 2:
+    elif data.shop_items[1][2]["tier"] >= 100 and (buy_item) == 2 and shop == 2:
         print("Velcia: Whoops! That upgrade's all sold out, hehe~")
     try:
         final_cost = 0
@@ -160,19 +167,27 @@ def shop_purchase(buy_item, data, buy_amnt, shop):
         print("This item doesn't exist! Check the shop to make sure it exists.")
         time.sleep(1)
         return
+    
+    if shop == 1 and data.bits >= final_cost:
+        pass
+    elif shop == 2 and data.super_bits >= final_cost: 
+        pass
+    else:
+        if shop == 1:
+            print(f"Brushia: You don't have enough bits! You need {final_cost - data.bits} more!")
+            time.sleep(1)
+            return
+        elif shop == 2:
+            print(f"Velcia: Oops! You don't have enough of those, you'd need {final_cost - data.super_bits} more!")
+            time.sleep(1)
+            return
 
-    if data.bits >= final_cost and (buy_item - 1) < len(data.shop_items[(shop - 1)]):
+    if (buy_item - 1) < len(data.shop_items[(shop - 1)]):
         data.shop_items[(shop - 1)][(buy_item - 1)]["tier"] += 1 * buy_amnt
         item_name = data.shop_items[(shop - 1)][(buy_item - 1)]["id"]
         tier_upgrading(data, item_name, shop, final_cost, buy_amnt)
     elif (buy_item - 1) >= len(data.shop_items[shop]):
         print("This item doesn't exist! Check the shop to make sure it exists.")
-        time.sleep(1)
-    else: 
-        if shop == 1:
-            print(f"Brushia: You don't have enough bits! You need {final_cost - data.bits} more!")
-        elif shop == 2:
-            print(f"Velcia: Oops! You don't have enough of those, you'd need {final_cost - data.super_bits} more!")
         time.sleep(1)
     
 def tier_upgrading(data, item_name: str, shop: int, final_cost, buy_amnt: int):
@@ -192,7 +207,7 @@ def tier_upgrading(data, item_name: str, shop: int, final_cost, buy_amnt: int):
     elif item_name == "Better Fuses": 
         data.fuse_durability += (1 * buy_amnt)
     elif item_name == "Super-Bit Chance II":
-        data.super_bit_chnce 
+        data.super_bit_chnce += 1
 
 def forging(data):
     roll = random.randint(0,10)

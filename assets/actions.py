@@ -133,8 +133,8 @@ def new_game(user):
         "bit_cooldown" : 2,
         "super_bits" : 0,
         "super_bits_chance" : 0,
-        "bonus_fuses" : 1,
-        "fuse_durability" : 1,
+        "bonus_fuses" : 0,
+        "fuse_durability" : 0,
         "current_imbuement" : "None",
          }
     

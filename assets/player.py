@@ -23,6 +23,8 @@ class Player():
         self.status = "Nominal"
     
     def bit_production(self):
+        input((int(math.floor(self.super_bit_chnce / 10))))
+        input(self.fuse_durability)
         self.temp_adders()
         self.heat = 0
         fuse_cnt = 1 + self.bonus_fuses + self.temp_bonuses["xtra_fuses"]
@@ -37,6 +39,7 @@ class Player():
         else:
             self.status = "Nominal"
         while True:
+            self.production_HUD(fuse_cnt)
             if fuse_cnt == 0:
                 self.status = "!!! ALL FUSES BLOWN !!!"
                 self.production_HUD(fuse_cnt)
@@ -48,9 +51,10 @@ class Player():
             else:
                 heat_roll = random.randint(0, (self.heat_max - int(self.heat)))
                 try:
-                    super_roll = random.randint(0, (100 - self.super_bit_chnce))
+                    if self.super_bit_chnce > 0:
+                        super_roll = random.randint(0, (100 - int(math.floor(self.super_bit_chnce / 10))))
                 except:
-                    super_roll = random.randint(0, 30)
+                    super_roll = random.randint(0, 10)
             if (heat_roll == 0): 
                 break_roll = random.randint(0, 0 + self.fuse_durability)
                 if break_roll == 0:
@@ -63,8 +67,11 @@ class Player():
                 self.bits += 1 * (self.bit_multi + self.temp_bonuses["bit_multi"])
                 self.heat += self.heat_rate / 1 + self.temp_bonuses["heat_divide"]
                 time.sleep(self.bit_cooldown)
-            if super_roll == 0:
-                self.super_bits += 1 * (1 + (self.temp_bonuses["s_bit_multi"]))
+            try:
+                if super_roll == 0:
+                    self.super_bits += 1 * (1 + (self.temp_bonuses["s_bit_multi"]))
+            except:
+                pass
             self.production_HUD(fuse_cnt)
 
     def production_HUD(self, fuse_cnt):
@@ -97,9 +104,9 @@ class Player():
         print(f"Bit Cooldown: {self.bit_cooldown} seconds")
         print(f"Heat Rate: {(self.heat_rate)}/cycle")
         print(f"Super-Bits: {self.super_bits}")
-        print(f"Super-Bit Chance: {self.super_bit_chnce}%")
+        print(f"Super-Bit Chance: {(self.super_bit_chnce) / 10}%")
         print(f"Fuses: {(1 + self.bonus_fuses)}")
-        print(f"Fuse Durability: {(1 + self.fuse_durability)}")
+        print(f"Fuse Durability: {(self.fuse_durability)}")
         print(f"Current Imbuement: {(self.current_imbuement)}")
         print("-------------")
         print(f"Total Multi: {(self.bit_multi) + (0.1 / self.bit_cooldown)}")
