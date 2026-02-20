@@ -5,7 +5,7 @@ import math, time, os, random
 from assets import actions
 
 scaling_mod = 0.31
-imbument_list = [{"name" : "Deep Freeze", "Desc" : "Divides heat by 3", "rarity" : 1}, {"name" : "Work Smarter", "Desc" : "Increases fuse count by +3", "rarity" : 2}, {"name" : "Superior Multi", "Desc" : "2x Super Bits, +3x Bit Multi", "rarity" : 3}]
+imbument_list = [{"name" : "Deep Freeze", "Desc" : "Divides heat by 4", "rarity" : 1}, {"name" : "Work Smarter", "Desc" : "Increases fuse count by +3", "rarity" : 2}, {"name" : "Superior Multi", "Desc" : "2x Super Bits, +3x Bit Multi", "rarity" : 3}]
 
 def shop_menu(data):
     while True:
@@ -120,10 +120,10 @@ def imbumentalforge(data):
                     if data.bits < 100000000000 and data.super_bits < 10:
                         print(f"Ichor: Sorry my friend. You lack the funds for my services, I'd need {10 - data.super_bits} more Super Bits, and {100000000000 - data.bits} more Bits.")
                         print("Ichor: Maybe Brushia or Velcia can help?")
-                    elif data.super_bits > 10:
+                    elif data.super_bits >= 10:
                         print(f"Ichor: Sorry my friend. You lack the funds for my services, I'd need {100000000000 - data.bits} more Bits.")
                         print("Ichor: Work on that bit multi!")
-                    elif data.bits > 100000000000:
+                    elif data.bits >= 100000000000:
                         print(f"Ichor: Sorry my friend. You lack the funds for my services, I'd need {10 - data.super_bits} more Super Bits.")
                         print("Ichor: Perhaps some super bit chance upgrades are in order?")
                     time.sleep(3.5)
