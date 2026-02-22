@@ -51,7 +51,7 @@ def bitsclusives(data):
             if action == 1:
                 try: 
                     action = int(input("Brushia: Which item would you like? (#): "))
-                    amnt = int(input("Brushia: How many of those? (#): "))
+                    amnt = input("Brushia: How many of those? (# or max): ")
                     shop_purchase(action, data, amnt, 1)
                 except ValueError:
                     print("Invalid input.")
@@ -82,7 +82,7 @@ def supershinies(data):
             if action == 1:
                 try: 
                     action = int(input("Velcia: Oh umm which one? (#): "))
-                    amnt = int(input("Velcia: How much? (#): "))
+                    amnt = input("Velcia: How much? (# or max): ")
                     shop_purchase(action, data, amnt, 2)
                 except ValueError:
                     print("Invalid input.")
@@ -159,9 +159,32 @@ def shop_purchase(buy_item, data, buy_amnt, shop):
         final_cost = 0
         base_cost = data.shop_items[(shop - 1)][(buy_item - 1)]["cost"]
         tier = data.shop_items[(shop - 1)][(buy_item - 1)]["tier"]
-        for x in range(buy_amnt):
-            cost = math.floor(base_cost + (5 ** (scaling_mod * (tier + x))))
-            final_cost += cost
+        
+        if buy_amnt.lower() == "max":
+            input("!")
+            iterator = 0
+            while True:
+                if shop == 1 and final_cost > data.bits:
+                    final_cost -= math.floor(base_cost + (5 ** (scaling_mod * (tier + iterator))))
+                    iterator -= 1
+                    break          
+                elif shop == 2 and final_cost > data.super_bits:
+                    final_cost -= math.floor(base_cost + (5 ** (scaling_mod * (tier + iterator))))
+                    iterator -= 1
+                    break
+                cost = math.floor(base_cost + (5 ** (scaling_mod * (tier + iterator))))
+                final_cost += cost
+                iterator += 1
+            buy_amnt = iterator
+        elif buy_amnt.isnumeric() == False:
+            print("Invalid input.")
+            time.sleep(3/2)
+            return
+        else:
+            buy_amnt = int(buy_amnt)
+            for x in range(buy_amnt):
+                cost = math.floor(base_cost + (5 ** (scaling_mod * (tier + x))))
+                final_cost += cost
 
     except IndexError:
         print("This item doesn't exist! Check the shop to make sure it exists.")
@@ -196,18 +219,19 @@ def tier_upgrading(data, item_name: str, shop: int, final_cost, buy_amnt: int):
     elif shop == 2:
         data.super_bits -= final_cost
 
-    if item_name == "Heat Rate":
-        data.heat_rate /= (1.75 * buy_amnt)
-    elif item_name == "Bit Multi":
-        data.bit_multi += (1 * buy_amnt)
-    elif item_name == "Super-Bit Chance":
-        data.super_bit_chnce += (1 * buy_amnt)
-    elif item_name == "Xtra Fuse":
-        data.bonus_fuses += (1 * buy_amnt)
-    elif item_name == "Better Fuses": 
-        data.fuse_durability += (1 * buy_amnt)
-    elif item_name == "Super-Bit Chance II":
-        data.super_bit_chnce += 1
+    for i in range(buy_amnt + 1):
+        if item_name == "Heat Rate":
+            data.heat_rate /= 1.75
+        elif item_name == "Bit Multi":
+            data.bit_multi += 1
+        elif item_name == "Super-Bit Chance":
+            data.super_bit_chnce += 1
+        elif item_name == "Xtra Fuse":
+            data.bonus_fuses += 1 
+        elif item_name == "Better Fuses": 
+            data.fuse_durability += 1 
+        elif item_name == "Super-Bit Chance II":
+            data.super_bit_chnce += 1
 
 def forging(data):
     roll = random.randint(0,10)
