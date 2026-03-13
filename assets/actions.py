@@ -27,10 +27,12 @@ def load_game(player_name,user_data):
         user_data.bits_multi = info_dict["bit_multi"]
         user_data.bit_cooldown = info_dict["bit_cooldown"]
         user_data.super_bits = info_dict["super_bits"]
+        user_data.molten_bits = info_dict["molten_bits"]
         user_data.super_bit_chnce = info_dict["super_bits_chance"]
         user_data.bonus_fuses = info_dict["bonus_fuses"]
         user_data.fuse_durability = info_dict["fuse_durability"]
         user_data.current_imbuement = info_dict["current_imbuement"]
+        user_data.equipment = info_dict["equipment"]
     except:
         pass
 
@@ -74,9 +76,11 @@ def save_game(user_data):
         "bit_cooldown" : 0.1 * user_data.heat_rate,
         "super_bits" : user_data.super_bits,
         "super_bits_chance" : user_data.super_bit_chnce,
+        "molten_bits" : user_data.molten_bits,
         "bonus_fuses" : user_data.bonus_fuses,
         "fuse_durability" : user_data.fuse_durability,
         "current_imbuement" : user_data.current_imbuement,
+        "equipment" : user_data.equipment
          }
     file.write(json.dumps(template))
 
@@ -133,9 +137,11 @@ def new_game(user):
         "bit_cooldown" : 2,
         "super_bits" : 0,
         "super_bits_chance" : 0,
+        "molten_bits" : 0,
         "bonus_fuses" : 0,
         "fuse_durability" : 0,
         "current_imbuement" : "None",
+        "equipment" : "None"
          }
     
     file.write(json.dumps(template))

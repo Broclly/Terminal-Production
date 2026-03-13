@@ -4,7 +4,7 @@ import time, random, os, math
 import assets.player as player, assets.actions as actions, assets.shops as shops
 
 user = player.Player()
-build_ver = "0.2.3"
+build_ver = "0.3"
 
 
 def welcome():
@@ -23,28 +23,28 @@ def main_menu():
         print("3. Quit")
         try: 
             temp = int(input("Select the number on which task you selected: "))
-            if temp == 1:
-                user.name = input("Welcome! Enter your username: ")
-                actions.new_game(user.name)
-                actions.load_game(user.name,user)
-                game_play()
-            elif temp == 2:
-                file_to_load = input("Welcome back! Enter your username: ")
-                load_check = actions.load_game(file_to_load, user)
-                if load_check != 0:
-                    actions.load_shop(file_to_load, user)
-                    game_play()
-                else:
-                    print("This file does not exist! Make sure you are trying to load an existing file.")
-                    print("Do not include the .json file extension")
-                    print("Do not try to load the -shop.json file")
-                    time.sleep(3)
-                    actions.clear_screen()
-            elif temp == 3:
-                quit()
         except ValueError:
             print("Invalid input.")
             time.sleep(3/2)
+        if temp == 1:
+            user.name = input("Welcome! Enter your username: ")
+            actions.new_game(user.name)
+            actions.load_game(user.name,user)
+            game_play()
+        elif temp == 2:
+            file_to_load = input("Welcome back! Enter your username: ")
+            load_check = actions.load_game(file_to_load, user)
+            if load_check != 0:
+                actions.load_shop(file_to_load, user)
+                game_play()
+            else:
+                print("This file does not exist! Make sure you are trying to load an existing file.")
+                print("Do not include the .json file extension")
+                print("Do not try to load the -shop.json file")
+                time.sleep(3)
+                actions.clear_screen()
+        elif temp == 3:
+            quit()
 
 def game_play():
     while True: 
@@ -62,32 +62,32 @@ def game_play():
         print("5. Back to menu")
         try:
             temp = int(input("Select the number on which task you selected: "))
-            if temp == 1:
-                actions.clear_screen()
-                user.bit_production()
-            elif temp == 2:
-                actions.load_shop(user.name,user)
-                shops.shop_menu(user)
-                actions.save_shop(user)
-                actions.save_game(user)
-                actions.load_game(user.name,user)
-                actions.clear_screen()
-            elif temp == 3:
-                actions.save_game(user)
-                actions.save_shop(user)
-                actions.load_game(user.name,user) # refreshes data
-                actions.clear_screen()
-            elif temp == 4:
-                actions.clear_screen()
-                actions.save_game(user)
-                user.display_stats()
-            elif temp == 5:
-                return
-            else:
-                print("Invalid input")
-                time.sleep(3/2)
         except Exception as e:
             print("Invalid input.")
+            time.sleep(3/2)
+        if temp == 1:
+            actions.clear_screen()
+            user.bit_production()
+        elif temp == 2:
+            actions.load_shop(user.name,user)
+            shops.shop_menu(user)
+            actions.save_shop(user)
+            actions.save_game(user)
+            actions.load_game(user.name,user)
+            actions.clear_screen()
+        elif temp == 3:
+            actions.save_game(user)
+            actions.save_shop(user)
+            actions.load_game(user.name,user) # refreshes data
+            actions.clear_screen()
+        elif temp == 4:
+            actions.clear_screen()
+            actions.save_game(user)
+            user.display_stats()
+        elif temp == 5:
+            return
+        else:
+            print("Invalid input")
             time.sleep(3/2)
 
 
