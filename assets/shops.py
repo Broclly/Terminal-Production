@@ -219,7 +219,6 @@ def shop_purchase(buy_item, data, buy_amnt, shop):
         tier = data.shop_items[(shop - 1)][(buy_item - 1)]["tier"]
         
         if buy_amnt.lower() == "max":
-            input("!")
             iterator = 0
             while True:
                 if shop == 1 and final_cost > data.bits:
@@ -296,7 +295,6 @@ def forging(data, forge_type):
     rarity = -1
     if forge_type == "Hex":
         roll = random.randint(0,15)
-        roll = 15
         if roll == 15:
             print("GLEAM!!~")
             rarity = 4
@@ -325,7 +323,6 @@ def forging(data, forge_type):
         input("\nPress enter to return...")
     elif forge_type == "Equipment":
         roll = random.randint(0,10)
-        roll = 10
         if roll == 10:
             print("POP!~")
             rarity = 3
