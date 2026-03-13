@@ -142,20 +142,22 @@ def imbumentalforge(data):
                     try:
                         action = int(input("Ichor: So what will it be? "))
                         if action == 1:
-                            if data.molten_bits >= 5 and data.super_bits >= 250:
+                            if data.molten_bits >= 5 and data.super_bits >= 2500:
+                                data.molten_bits -= 5
+                                data.super_bits -= 2500
                                 forging(data,"Equipment")
                             elif data.molten_bits >= 5:
                                 print(f"Ichor: Sorry my friend, but it appears you do not have enough Super Bits. My services require {(50 - data.super_bits)} more of them.")
                                 time.sleep(5/2)
-                            elif data.super_bits >= 50:
+                            elif data.super_bits >= 2500:
                                 print(f"Ichor: My deepest apologies, but it appears you do not have enough Molten Bits. My services require {(5 - data.molten_bits)} more of them.")
                                 time.sleep(5/2)
                             else:
                                 print(f"Ichor: Oh goodness! It appears you do not have enough Molten Bits or Super Bits! Please come back with {(50 - data.super_bits)} Super and {(5 - data.molten_bits)} Molten Bits .")
                                 time.sleep(5/2)
                         elif action == 2:
-                            if data.super_bits >= 60:
-                                data.super_bits -= 60
+                            if data.super_bits >= 250:
+                                data.super_bits -= 250
                                 data.molten_bits += 1
                             else:
                                 print(f"Ichor: Sorry my friend, you are lacking funds. I'll require {50 - data.super_bits} more Super Bits.")
