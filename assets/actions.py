@@ -2,6 +2,30 @@
 
 import os, json
 
+default_template_player = {
+        "heat_rate" : 20,
+        "heat_max" : 100,
+        "bits" : 0,
+        "bit_multi" : 1,
+        "bit_cooldown" : 2,
+        "super_bits" : 0,
+        "super_bits_chance" : 0,
+        "molten_bits" : 0,
+        "bonus_fuses" : 0,
+        "fuse_durability" : 0,
+        "current_imbuement" : "None",
+        "equipment" : "None"
+         }
+
+default_template_shop = {
+        "bit_upgrade1" : {"tier" : 1, "cost" : 10, "id" : "Heat Rate"},
+        "bit_upgrade2" : {"tier" : 1, "cost" : 25, "id" : "Bit Multi"},
+        "bit_upgrade3" : {"tier" : 1, "cost" : 1000, "id" : "Super-Bit Chance"},
+        "s_bit_upgrade1" : {"tier" : 1, "cost" : 1, "id" : "Xtra Fuse"},
+        "s_bit_upgrade2" : {"tier" : 1, "cost" : 15, "id" : "Better Fuses"},
+        "s_bit_upgrade3" : {"tier" : 1, "cost" : 10, "id" : "Super-Bit Chance II"}
+         }
+
 def directory_snap(file_name : str):
     try:
         saves_dir = os.path.join(os.path.dirname(__file__), "saves")
@@ -19,22 +43,27 @@ def load_game(player_name,user_data):
     for x in file:
         info_dict = json.loads(x)
     
-    try:
-        user_data.name = info_dict["name"]
-        user_data.heat_rate = info_dict["heat_rate"]
-        user_data.heat_max = info_dict["heat_max"]
-        user_data.bits = info_dict["bits"]
-        user_data.bits_multi = info_dict["bit_multi"]
-        user_data.bit_cooldown = info_dict["bit_cooldown"]
-        user_data.super_bits = info_dict["super_bits"]
-        user_data.molten_bits = info_dict["molten_bits"]
-        user_data.super_bit_chnce = info_dict["super_bits_chance"]
-        user_data.bonus_fuses = info_dict["bonus_fuses"]
-        user_data.fuse_durability = info_dict["fuse_durability"]
-        user_data.current_imbuement = info_dict["current_imbuement"]
-        user_data.equipment = info_dict["equipment"]
-    except:
-        pass
+    for key in default_template_player:
+        if key not in info_dict:
+            info_dict[key] = default_template_player[key]
+    while True:
+        try:
+            user_data.name = info_dict["name"]
+            user_data.heat_rate = info_dict["heat_rate"]
+            user_data.heat_max = info_dict["heat_max"]
+            user_data.bits = info_dict["bits"]
+            user_data.bits_multi = info_dict["bit_multi"]
+            user_data.bit_cooldown = info_dict["bit_cooldown"]
+            user_data.super_bits = info_dict["super_bits"]
+            user_data.molten_bits = info_dict["molten_bits"]
+            user_data.super_bit_chnce = info_dict["super_bits_chance"]
+            user_data.bonus_fuses = info_dict["bonus_fuses"]
+            user_data.fuse_durability = info_dict["fuse_durability"]
+            user_data.current_imbuement = info_dict["current_imbuement"]
+            user_data.equipment = info_dict["equipment"]
+            break
+        except Exception:
+            pass
 
     file.close()
 
@@ -46,6 +75,9 @@ def load_shop(player_name,user_data):
         return 0
     for x in file:
         info_dict = json.loads(x)
+    for key in default_template_player:
+        if key not in info_dict:
+            info_dict[key] = default_template_player[key]
 
     try:
         user_data.shop_items[0][0] = info_dict["bit_upgrade1"]
@@ -112,39 +144,15 @@ def new_game(user):
     except FileExistsError:
         file = open(file_path + "-shop.json", "w")
     
-    template = {
-        "bit_upgrade1" : {"tier" : 1, "cost" : 10, "id" : "Heat Rate"},
-        "bit_upgrade2" : {"tier" : 1, "cost" : 25, "id" : "Bit Multi"},
-        "bit_upgrade3" : {"tier" : 1, "cost" : 1000, "id" : "Super-Bit Chance"},
-        "s_bit_upgrade1" : {"tier" : 1, "cost" : 1, "id" : "Xtra Fuse"},
-        "s_bit_upgrade2" : {"tier" : 1, "cost" : 15, "id" : "Better Fuses"},
-        "s_bit_upgrade3" : {"tier" : 1, "cost" : 10, "id" : "Super-Bit Chance II"}
-         }
-    file.write(json.dumps(template))
+    file.write(json.dumps(default_template_shop))
     file.close()
 
     try: 
         file = open(file_path + ".json", "x")
     except FileExistsError:
         file = open(file_path + ".json", "w")
-
-    template = {
-        "name" : user,
-        "heat_rate" : 20,
-        "heat_max" : 100,
-        "bits" : 0,
-        "bit_multi" : 1,
-        "bit_cooldown" : 2,
-        "super_bits" : 0,
-        "super_bits_chance" : 0,
-        "molten_bits" : 0,
-        "bonus_fuses" : 0,
-        "fuse_durability" : 0,
-        "current_imbuement" : "None",
-        "equipment" : "None"
-         }
     
-    file.write(json.dumps(template))
+    file.write(json.dumps(default_template_player))
     file.close()
 
 def clear_screen():
