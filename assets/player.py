@@ -70,15 +70,17 @@ class Player():
                 break_roll = random.randint(0, 0 + self.fuse_durability)
                 if break_roll == 0:
                     fuse_cnt -= 1
-
-            if self.status != "Nominal":
-                self.bits += (1 * ((self.bit_multi + self.temp_bonuses["bit_B_multi"]) * ((0.1 / self.bit_cooldown) / 2))) * (self.temp_bonuses["bit_Sp_multi"] + 1)
-                self.heat += 0.1 / (1 + self.temp_bonuses["heat_divide"])
-                time.sleep(0.1) 
-            else:
-                self.bits += (1 * (self.bit_multi + self.temp_bonuses["bit_B_multi"])) * (self.temp_bonuses["bit_Sp_multi"] + 1)
-                self.heat += self.heat_rate / (1 + self.temp_bonuses["heat_divide"])
-                time.sleep(self.bit_cooldown)
+            try:
+                if self.status != "Nominal":
+                    self.bits += (1 * ((self.bit_multi + self.temp_bonuses["bit_B_multi"]) * ((0.1 / self.bit_cooldown) / 2))) * (self.temp_bonuses["bit_Sp_multi"] + 1)
+                    self.heat += 0.1 / (1 + self.temp_bonuses["heat_divide"])
+                    time.sleep(0.1) 
+                else:
+                    self.bits += (1 * (self.bit_multi + self.temp_bonuses["bit_B_multi"])) * (self.temp_bonuses["bit_Sp_multi"] + 1)
+                    self.heat += self.heat_rate / (1 + self.temp_bonuses["heat_divide"])
+                    time.sleep(self.bit_cooldown)
+            except OverflowError:
+                pass
             try:
                 if super_roll == 0:
                     self.super_bits += 1 * (1 + (self.temp_bonuses["s_bit_multi"]))
@@ -89,7 +91,10 @@ class Player():
                     self.molten_bits += 1
             except:
                 pass
-            self.production_HUD(fuse_cnt)
+            try:
+                self.production_HUD(fuse_cnt)
+            except OverflowError:
+                self.prestige_HUD()
 
     def production_HUD(self, fuse_cnt):
         content_lines = [
@@ -97,8 +102,8 @@ class Player():
             f"Heat: {math.floor(self.heat)}",
             f"Fuses: {fuse_cnt}",
             f"Status: {self.status}",
-            f"Total Bits: {math.floor(self.bits)}",
-            f"Total Super Bits: {math.floor(self.super_bits)}",
+            f"Total Bits: {(math.floor(self.bits))}",
+            f"Total Super Bits: {(math.floor(self.super_bits))}",
             f"Total Molten Bits: {math.floor(self.molten_bits)}",
             "====="
         ]
@@ -114,6 +119,16 @@ class Player():
     
         print(f"\033[{total_lines}A", end='') 
 
+    def prestige_HUD(self):
+        actions.clear_screen()
+        print("The glass facade of reality shatters, revealing to you the true beauty of time and space...")
+        time.sleep(3/2)
+        print("No longer held back by the shackles of the living, you confront the god of this universe...")
+        time.sleep(3/2)
+        print("SYSTEM: GR33TINGS PL4Y3R.")
+        time.sleep(1/2)
+        print("SYSTEM: W3 H4V3N'T M3T B3 4.")
+        input("TEST")
     def display_stats(self):
         print("STATISTICS:")
         print("==========")

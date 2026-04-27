@@ -11,7 +11,9 @@ default_template_player = {
         "super_bits" : 0,
         "super_bits_chance" : 0,
         "molten_bits" : 0,
+        "stardust" : 0,
         "bonus_fuses" : 0,
+        "prestige" : 0,
         "fuse_durability" : 0,
         "current_imbuement" : "None",
         "equipment" : "None"
@@ -137,8 +139,8 @@ def save_shop(user_data):
     file.write(json.dumps(template))
     file.close()
 
-def new_game(user):
-    file_path = directory_snap(user)
+def new_game(user_data):
+    file_path = directory_snap(user_data)
     try: 
         file = open(file_path + "-shop.json", "x")
     except FileExistsError:
@@ -154,6 +156,12 @@ def new_game(user):
     
     file.write(json.dumps(default_template_player))
     file.close()
+
+def prestiging(user_data):
+    old_stardust = user_data.stardust
+    old_prestige = user_data.prestige
+    new_game(user_data)
+    
 
 def clear_screen():
     temp = os.name
