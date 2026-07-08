@@ -161,7 +161,8 @@ def prestiging(user_data):
     old_stardust = user_data.stardust
     old_prestige = user_data.prestige
     new_game(user_data)
-    
+    user_data.stardust = old_stardust + (1 * user_data.stardust_mult)
+    user_data.prestige = old_prestige + 1
 
 def clear_screen():
     temp = os.name
