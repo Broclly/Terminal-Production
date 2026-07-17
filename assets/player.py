@@ -161,6 +161,7 @@ class Player():
         print("==========")
         print(f"Username: {self.name}")
         print(f"Bits: {self.bits}")
+        print(f"Prestige: {self.prestige}")
         print(f"Bit Cooldown: {self.bit_cooldown} seconds")
         print(f"Heat Rate: {(self.heat_rate)}/cycle")
         print(f"Super-Bits: {self.super_bits}")
