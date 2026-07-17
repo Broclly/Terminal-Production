@@ -2,6 +2,7 @@
 
 import time, random, os, math
 import assets.actions as actions
+import assets.shops as shops
 
 class Player():
     def __init__(self, name="Player"):
@@ -13,6 +14,9 @@ class Player():
         self.bits = 0
         self.bit_cooldown = 2
         self.bit_multi = 1
+        self.prestige = 0
+        self.stardust = 0
+        self.stardust_mult = 1
         self.super_bits = 0
         self.super_bit_chnce = 0
         self.molten_bits = 0
@@ -91,10 +95,11 @@ class Player():
                     self.molten_bits += 1
             except:
                 pass
-            try:
+            if self.bits < 1e250:
                 self.production_HUD(fuse_cnt)
-            except OverflowError:
+            else:
                 self.prestige_HUD()
+                return
 
     def production_HUD(self, fuse_cnt):
         content_lines = [
@@ -122,13 +127,35 @@ class Player():
     def prestige_HUD(self):
         actions.clear_screen()
         print("The glass facade of reality shatters, revealing to you the true beauty of time and space...")
-        time.sleep(3/2)
-        print("No longer held back by the shackles of the living, you confront the god of this universe...")
-        time.sleep(3/2)
+        time.sleep(1)
+        if self.prestige == 0:    
+            print("No longer held back by the shackles of the living, you confront the god of this universe...")
+        else:
+            print("No longer wanting to be shackled by your avatar, you seek wisdom from the simulation master...")
+        time.sleep(1)
+        if self.prestige == 0:
+            print("You tremble and shake at the feeling of invisible energy from an unknown source...")
+        else:
+            print("You feel the comforting presence of someone caring for you...")
+        time.sleep(1)
         print("SYSTEM: GR33TINGS PL4Y3R.")
-        time.sleep(1/2)
-        print("SYSTEM: W3 H4V3N'T M3T B3 4.")
-        input("TEST")
+        time.sleep(1)
+        if self.prestige == 0:
+            print("SYSTEM: W3 H4V3N'T M3T B3 4.")
+            time.sleep(1)
+            print("SYSTEM: I AM TH3 OWN3R 0F TH3 S!MULATI0N Y0U AR3 EXP3RINCING!")
+            time.sleep(3/2)
+            print("SYSTEM: MY M3SSAGES SHOULD BE PATCH!NG THROUGH CL3ANER NOW.")
+            time.sleep(3/2)
+            print("SYSTEM: IT'S GOOD TO SEE THE PROGRAM HAS WORKED!")
+            time.sleep(3/2)
+            print("SYSTEM: BUT ENOUGH ABOUT THAT, WHAT DO YOU WANT, MY BELOVED TEST SUBJECT?")
+        else:
+            print("SYSTEM: GOOD T0 SEE YOU AGAIN! NOW, PICK YOUR CHOICE!")
+        time.sleep(3)
+        shops.rift_station(self)
+
+        
     def display_stats(self):
         print("STATISTICS:")
         print("==========")

@@ -348,3 +348,23 @@ def forging(data, forge_type):
         print(f"Equipment description: {equipment_list[(rarity - 1)][rolled_equipment]["Desc"]}")
         print(f"Equipment Rarity: {equipment_list[(rarity - 1)][rolled_equipment]["rarity"]}")
         input("\nPress enter to return...")
+
+def rift_station(data):
+    actions.clear_screen()
+    while True:    
+        print("SYSTEM: TAKE YOUR TIME, IT STAYS STILL IN THIS DIMENSION.")
+        print(f"Stardust: {data.stardust}")
+        print("I wish for...")
+        print("==============")
+        print(f"1. A new life. (Return back to the simulation, +1 prestige, +{(1 * data.stardust_mult)} stardust)")
+        print(f"2. A new body. (Vessel creation)")
+        print(f"3. A new heavens. (Constellation viewer)")
+        print(f"4. A new faith. (Change alignment)")
+        temp = input("SYSTEM: WHAT IS YOUR WISH?")
+        if temp == "1":
+            print("SYSTEM: THANK YOU FOR VISITING ME, FRIEND.")
+            time.sleep(3/2)
+            print("You body fragments into pieces. When you awake, you find yourself operating the bit factory once more. This time, slightly enlightened.")
+            time.sleep(2)
+            actions.prestiging(data)
+            return

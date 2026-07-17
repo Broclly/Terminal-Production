@@ -1,6 +1,7 @@
 # Created on 2026-01-03
 
-import os, json
+import os, json, math
+from decimal import Decimal, InvalidOperation
 
 default_template_player = {
         "heat_rate" : 20,
@@ -12,12 +13,13 @@ default_template_player = {
         "super_bits_chance" : 0,
         "molten_bits" : 0,
         "stardust" : 0,
+        "stardust_mult" : 1,
         "bonus_fuses" : 0,
         "prestige" : 0,
         "fuse_durability" : 0,
         "current_imbuement" : "None",
         "equipment" : "None"
-         }
+        }
 
 default_template_shop = {
         "bit_upgrade1" : {"tier" : 1, "cost" : 10, "id" : "Heat Rate"},
@@ -58,15 +60,19 @@ def load_game(player_name,user_data):
             user_data.bit_cooldown = info_dict["bit_cooldown"]
             user_data.super_bits = info_dict["super_bits"]
             user_data.molten_bits = info_dict["molten_bits"]
+            user_data.stardust = info_dict["stardust"]
+            user_data.stardust_mult = info_dict["stardust_mult"]
             user_data.super_bit_chnce = info_dict["super_bits_chance"]
+            user_data.prestige = info_dict["prestige"]
             user_data.bonus_fuses = info_dict["bonus_fuses"]
             user_data.fuse_durability = info_dict["fuse_durability"]
             user_data.current_imbuement = info_dict["current_imbuement"]
             user_data.equipment = info_dict["equipment"]
             break
-        except Exception:
+        except Exception as e:
+            print("passing!")
+            print(e)
             pass
-
     file.close()
 
 def load_shop(player_name,user_data):
@@ -110,12 +116,15 @@ def save_game(user_data):
         "bit_cooldown" : 0.1 * user_data.heat_rate,
         "super_bits" : user_data.super_bits,
         "super_bits_chance" : user_data.super_bit_chnce,
+        "prestige" : user_data.prestige,
         "molten_bits" : user_data.molten_bits,
+        "stardust" : user_data.stardust,
+        "stardust_mult" : user_data.stardust_mult,
         "bonus_fuses" : user_data.bonus_fuses,
         "fuse_durability" : user_data.fuse_durability,
         "current_imbuement" : user_data.current_imbuement,
         "equipment" : user_data.equipment
-         }
+        }
     file.write(json.dumps(template))
 
     file.close()
@@ -139,8 +148,11 @@ def save_shop(user_data):
     file.write(json.dumps(template))
     file.close()
 
-def new_game(user_data):
-    file_path = directory_snap(user_data)
+def new_game(user_data, name):
+    try:
+        file_path = directory_snap(user_data.name)
+    except AttributeError:
+        file_path = directory_snap(user_data)
     try: 
         file = open(file_path + "-shop.json", "x")
     except FileExistsError:
@@ -154,15 +166,19 @@ def new_game(user_data):
     except FileExistsError:
         file = open(file_path + ".json", "w")
     
-    file.write(json.dumps(default_template_player))
+    temp = {"name" : name}
+    temp.update(default_template_player)
+    file.write(json.dumps(temp))
     file.close()
 
 def prestiging(user_data):
     old_stardust = user_data.stardust
     old_prestige = user_data.prestige
-    new_game(user_data)
+    new_game(user_data, user_data.name)
     user_data.stardust = old_stardust + (1 * user_data.stardust_mult)
     user_data.prestige = old_prestige + 1
+    load_game(user_data.name, user_data)
+    save_game(user_data)
 
 def clear_screen():
     temp = os.name

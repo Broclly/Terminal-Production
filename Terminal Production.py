@@ -4,7 +4,7 @@ import time, random, os, math
 import assets.player as player, assets.actions as actions, assets.shops as shops
 
 user = player.Player()
-build_ver = "0.3"
+build_ver = "0.4"
 
 
 def welcome():
@@ -28,7 +28,7 @@ def main_menu():
             time.sleep(3/2)
         if temp == 1:
             user.name = input("Welcome! Enter your username: ")
-            actions.new_game(user.name)
+            actions.new_game(user, user.name)
             actions.load_game(user.name,user)
             game_play()
         elif temp == 2:
@@ -51,7 +51,7 @@ def game_play():
         actions.clear_screen()
         user.temp_adders()
         print("Username: " + user.name)
-        print("Bits: " + str(math.floor(user.bits)))
+        print("Bits: " + str(user.bits))
         if user.super_bits > 0:
             print("Super Bits: " +str(math.floor(user.super_bits)))
         print("========")
