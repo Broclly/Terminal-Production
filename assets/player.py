@@ -8,6 +8,7 @@ class Player():
     def __init__(self, name="Player"):
         self.shop_items = [[{"tier" : 1, "cost" : 10, "id" : "Heat Rate"}, {"tier" : 1, "cost" : 25, "id" : "Bit Multi"}, {"tier" : 1, "cost" : 1000, "id" : "Super-Bit Chance"}],[{"tier" : 1, "cost" : 5, "id" : "Xtra Fuse"}, {"tier" : 1, "cost" : 15, "id" : "Better Fuses"}, {"tier" : 1, "cost" : 10, "id" : "Super-Bit Chance II"}]]
         self.temp_bonuses = {"bit_B_multi" : 0, "bit_Sp_multi" : 0, "s_bit_multi" : 0, "s_bit_chance" : 0, "s_bit_chanceH" : 0, "heat_divide" : 0, "xtra_fuses" : 0, "heat_max" : 0}
+        self.vessel = [{"tier" : 1, "cost" : 1, "id" : "Soul"}, {"tier" : 1, "cost" : 2, "id" : "Mind"}, {"tier" : 1, "cost" : 5, "id" : "Body"}]
         self.heat = 0
         self.heat_rate = 20 
         self.heat_max = 225

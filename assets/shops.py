@@ -368,3 +368,16 @@ def rift_station(data):
             time.sleep(2)
             actions.prestiging(data)
             return
+        elif temp == "2":
+            print
+        else: 
+            print()
+        
+def vessel_creation(data):
+    pass
+
+def constellations(data):
+    pass
+
+def factory_align(data):
+    pass
